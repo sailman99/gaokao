@@ -29,18 +29,34 @@
         android:title="主页"/>
 
     <item
-        android:id="@+id/nav_menu_categories"
-        android:icon="@mipmap/ic_sort_by_alpha_white_48dp"
-        android:title="分类"/>
+        android:id="@+id/nav_menu_chinese"
+        android:icon="@mipmap/ic_message_white_48dp"
+        android:title="语文"/>
 
     <item
-        android:id="@+id/nav_menu_feedback"
+        android:id="@+id/nav_menu_math"
         android:icon="@mipmap/ic_message_white_48dp"
-        android:title="反馈"/>
+        android:title="数学"/>
     <item
-        android:id="@+id/nav_menu_setting"
+        android:id="@+id/nav_menu_english"
+        android:icon="@mipmap/ic_message_white_48dp"
+        android:title="英语"/>
+    <item
+        android:id="@+id/nav_menu_physics"
+        android:icon="@mipmap/ic_message_white_48dp"
+        android:title="物理"/>
+    <item
+        android:id="@+id/nav_menu_chemistry"
+        android:icon="@mipmap/ic_message_white_48dp"
+        android:title="化学"/>
+    <item
+        android:id="@+id/nav_menu_biology"
+        android:icon="@mipmap/ic_message_white_48dp"
+        android:title="生物"/>
+    <item
+        android:id="@+id/nav_menu_other"
         android:icon="@mipmap/ic_settings_white_48dp"
-        android:title="设置"/>
+        android:title="其他"/>
 
   </group>
 </menu>

@@ -30,7 +30,7 @@
       例如：LinearLayout布局或者RelativeLayout布局；
   也可以是单个控件，
       如 TextView等  -->
-  <include layout="@layout/content_main"/>
+  <include layout="@layout/content_main_collapsing"/>
 
 
   <!-- 第二个位置 -->
