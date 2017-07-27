@@ -312,7 +312,7 @@ public class MyActivity extends AppCompatActivity
             if (msg.what == 1 ) {
                 try {
                     ArrayList<Chapter> chapterList = new ArrayList<>();
-                    chapterList.add(new Chapter(0, "请选择视频或文章所属章节"));
+                    chapterList.add(new Chapter(0, "请选择所属章节"));
                     JSONArray jsonArray = new JSONArray(myApp.getChapter_ThreadVar());
                     for (int i = 0; i < jsonArray.length(); i++) {
                         chapterList.add(new Chapter(jsonArray.getJSONObject(i).getInt("subjectchapterid"), jsonArray.getJSONObject(i).getString("chaptername")));
