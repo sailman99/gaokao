@@ -21,10 +21,10 @@
 <resources>
 
   <string-array name="tab_titles">
-    <item>垂直List</item>
-    <item>水平List</item>
-    <item>垂直Grid</item>
-    <item>水平Grid</item>
+    <item>视频</item>
+    <item>文章</item>
+    <item>公式</item>
+    <item>测试</item>
     <item>瀑布Staggered</item>
   </string-array>
 </resources>
