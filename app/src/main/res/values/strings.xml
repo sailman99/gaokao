@@ -21,13 +21,18 @@
   <string name="app_name">高考加油</string>
 
   <string name="toolbar_title">高考加油</string>
-  <string name="action_settings">settings</string>
+  <string name="action_settings">下载视频文件到本地</string>
   <string name="open">打开</string>
   <string name="close">关闭</string>
   <string name="header_author_name">高考加油</string>
   <string name="header_author_url">371969053@qq.com</string>
+  <string name="returndba">返回数据</string>
+  <string name="keyword">请输入关键字</string>
+  <string name="comments">请输入备注</string>
   <string name="plusone">+1</string>
   <string name="item_clicked">item clicked！</string>
   <string name="item_longclicked">item long clicked！</string>
-
+  <string name="item_clicked_net">网络数据</string>
+  <string name="item_clicked_location">本地数据</string>
+  <string name="item_clicked_save">保存数据</string>
 </resources>

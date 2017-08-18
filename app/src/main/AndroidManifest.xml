@@ -22,12 +22,31 @@
     package="com.sailman.gaokao">
 
   <uses-permission android:name="android.permission.INTERNET" />
+
+  <!-- SDCard中创建与删除文件权限 -->
+  <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+  <!-- 向SDCard写入数据权限 -->
+  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
   <application
       android:name="com.sailman.gaokao.MyApp"
       android:allowBackup="true"
       android:icon="@mipmap/ic_launcher"
       android:label="@string/app_name"
       android:theme="@style/AppTheme">
+    <activity
+        android:name=".WebViewActivity"
+        android:theme="@android:style/Theme.NoTitleBar" />
+    <activity
+        android:name=".LocalVideoActivity"
+        android:configChanges="orientation|screenSize"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+        android:screenOrientation="landscape"
+    />
+    <activity
+        android:name=".PlayActivity"
+      />
     <activity
         android:name="com.sailman.gaokao.MyActivity"
         android:label="@string/app_name">
@@ -37,6 +56,7 @@
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
     </activity>
+    <service android:name=".DownloadFileService" android:exported="false" />
   </application>
 
 </manifest>

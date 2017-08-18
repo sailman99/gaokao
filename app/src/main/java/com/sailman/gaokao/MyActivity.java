@@ -19,10 +19,14 @@
 
 package com.sailman.gaokao;
 
+import android.app.DownloadManager;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.AppBarLayout;
@@ -45,6 +49,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.sailman.gaokao.R;
@@ -63,6 +68,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,10 +86,11 @@ public class MyActivity extends AppCompatActivity
     private Toolbar mToolbar;
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
-    private FloatingActionButton mFloatingActionButton;
+    //private FloatingActionButton mFloatingActionButton;
     private NavigationView mNavigationView;
     private Spinner mspinner_labelclassifition, mspinner_chapter;
     private Button mgetfromgaokao_vedioartitle;
+    private EditText mid_keyword;
     private ThreadLocal<String> ts = new ThreadLocal<String>();
     private Context context;
     private MyApp myApp = new MyApp();
@@ -94,11 +101,18 @@ public class MyActivity extends AppCompatActivity
     // ViewPager的数据适配器
     private MyViewPagerAdapter mViewPagerAdapter;
 
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my);
         context = this;
+
+
+
+
         // 初始化各种控件
         initViews();
 
@@ -111,7 +125,10 @@ public class MyActivity extends AppCompatActivity
         //getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE);
         try {
             mCollapsingToolbarLayout.setTitle("语文");
+            myApp.setSubjectID("001");
+            myApp.setTypeid("001");//视频类型“001”，文章“002”，公式“003”，测试“004”
             initSpinner("001");
+
         }catch (Exception e){ }
 
     }
@@ -167,13 +184,41 @@ public class MyActivity extends AppCompatActivity
         // 设置Tablayout的Tab显示ViewPager的适配器中的getPageTitle函数获取到的标题
         mTabLayout.setTabsFromPagerAdapter(mViewPagerAdapter);
 
+
+
         // 设置FloatingActionButton的点击事件
-        mFloatingActionButton.setOnClickListener(this);
+        //mFloatingActionButton.setOnClickListener(this);
         mgetfromgaokao_vedioartitle.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
 
-                String Sql = "select vedioartitleid,title,url,subjectid,typeid,keyword,imageurl,comments,publication,inputdate,labelclassificationid,subjectchapterid from Gaokao_vedioartitle ";
-                Sql = Sql + "where ";
+               //String Sql = "select vedioartitleid,title,url,subjectid,typeid,keyword,imageurl,comments,publication,inputdate,labelclassificationid,subjectchapterid from Gaokao_vedioartitle ";
+                String Sql =  " where subjectid='"+myApp.getSubjectID()+"' and typeid='"+myApp.getTypeid()+"' ";
+                if(myApp.getLabelclassificationID()>0){
+                    Sql=Sql+" and  labelclassificationid="+myApp.getLabelclassificationID();
+                }
+                if(myApp.getSubjectchapterID()>0){
+                    Sql=Sql+" and  subjectchapterid="+myApp.getSubjectchapterID();
+                }
+                if(mid_keyword.getText().toString().trim().length()>0){
+                    String str_keyword=mid_keyword.getText().toString().trim();
+                    Sql=Sql+" and (title like '%"+str_keyword+"%' or keyword like '%"+str_keyword+"%' or comments like '%"+str_keyword+"%')";
+                }
+                try {
+                    Sql = URLEncoder.encode(Sql, "utf-8");
+                }catch(Exception e){}
+                final String url="http://113.107.154.131:9001/gupiao/JsonActiongetGaokao_vedioartitle";
+                final String post="jsonString="+Sql;
+                new Thread() {
+                    public void run() {
+                        try {
+                            myApp.setVedioartitle_ThreadVar(MyTools.readFromDBA(url,post));
+                            Message msg = new Message();
+                            msg.what = 2; //subjectchapter
+                            handler.sendMessage(msg);
+                        }catch (Exception e){Log.v("TAG",e.getMessage());}
+                    }}.start();
+
+
             }
         });
     }
@@ -188,7 +233,7 @@ public class MyActivity extends AppCompatActivity
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
 
-                String msgString = "";
+
 
                 switch (menuItem.getItemId()) {
 
@@ -238,45 +283,6 @@ public class MyActivity extends AppCompatActivity
         });
     }
 
-    private String readFromDBA(String path, String post) throws Exception {
-
-        URL url = null;
-        try {
-            url = new URL(path);
-            HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-            httpURLConnection.setRequestProperty("connection", "Keep-Alive");
-            httpURLConnection.setRequestProperty("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
-
-            httpURLConnection.setRequestMethod("POST");// 提交模式
-            // conn.setConnectTimeout(10000);//连接超时 单位毫秒
-            // conn.setReadTimeout(2000);//读取超时 单位毫秒
-
-
-            // 发送POST请求必须设置如下两行
-            httpURLConnection.setDoOutput(true);
-            httpURLConnection.setDoInput(true);
-            // 获取URLConnection对象对应的输出流
-            PrintWriter printWriter = new PrintWriter(httpURLConnection.getOutputStream());
-            // 发送请求参数
-            printWriter.write(post);//post的参数 xx=xx&yy=yy
-            // flush输出流的缓冲
-            printWriter.flush();
-            //开始获取数据
-            BufferedInputStream bis = new BufferedInputStream(httpURLConnection.getInputStream());
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            int len;
-            byte[] arr = new byte[1024];
-            while ((len = bis.read(arr)) != -1) {
-                bos.write(arr, 0, len);
-                bos.flush();
-            }
-            bos.close();
-            return bos.toString("utf-8");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 
     private Handler handler = new Handler() {
         @Override
@@ -338,6 +344,29 @@ public class MyActivity extends AppCompatActivity
 
 
             }
+            if(msg.what==2){
+                MyFragment mFragment;
+                try {
+                    if("001".equals(myApp.getTypeid())) {
+                        mFragment = (MyFragment) mFragments.get(0);
+                        mFragment.addData(myApp.getVedioartitle_ThreadVar());
+                    }
+                    if("002".equals(myApp.getTypeid())) {
+                        mFragment = (MyFragment) mFragments.get(1);
+                        mFragment.addData(myApp.getVedioartitle_ThreadVar());
+                    }
+                    if("003".equals(myApp.getTypeid())) {
+                        mFragment = (MyFragment) mFragments.get(2);
+                        mFragment.addData(myApp.getVedioartitle_ThreadVar());
+                    }
+                    if("004".equals(myApp.getTypeid())) {
+                        mFragment = (MyFragment) mFragments.get(3);
+                        mFragment.addData(myApp.getVedioartitle_ThreadVar());
+                    }
+
+                }catch (Exception e){}
+            }
+
 
         }
     };
@@ -351,7 +380,7 @@ public class MyActivity extends AppCompatActivity
         new Thread() {
           public void run() {
             try {
-                myApp.setLabel_ThreadVar(readFromDBA(urla,post));
+                myApp.setLabel_ThreadVar(MyTools.readFromDBA(urla,post));
                 Message msg = new Message();
                 msg.what = 0; //labelclassification
                 handler.sendMessage(msg);
@@ -360,12 +389,13 @@ public class MyActivity extends AppCompatActivity
         new Thread() {
             public void run() {
                 try {
-                    myApp.setChapter_ThreadVar(readFromDBA(urlb,post));
+                    myApp.setChapter_ThreadVar(MyTools.readFromDBA(urlb,post));
                     Message msg = new Message();
                     msg.what = 1; //subjectchapter
                     handler.sendMessage(msg);
                 }catch (Exception e){Log.v("TAG",e.getMessage());}
             }}.start();
+
   }
   private void initViews() {
 
@@ -375,12 +405,13 @@ public class MyActivity extends AppCompatActivity
     mToolbar = (Toolbar) findViewById(R.id.id_toolbar);
     mTabLayout = (TabLayout) findViewById(R.id.id_tablayout);
     mViewPager = (ViewPager) findViewById(R.id.id_viewpager);
-    mFloatingActionButton = (FloatingActionButton) findViewById(R.id.id_floatingactionbutton);
+    //mFloatingActionButton = (FloatingActionButton) findViewById(R.id.id_floatingactionbutton);
     mNavigationView = (NavigationView) findViewById(R.id.id_navigationview);
     mspinner_labelclassifition = (Spinner)findViewById(R.id.spinner_labelclassifition);
     mspinner_chapter = (Spinner)findViewById(R.id.spinner_chapter);
     mgetfromgaokao_vedioartitle =(Button)findViewById(R.id.getfromgaokao_vedioartitle);
     mCollapsingToolbarLayout=(CollapsingToolbarLayout)findViewById(R.id.collapsing_toolbar);
+    mid_keyword =(EditText)findViewById(R.id.id_keyword);
   }
   public String getFromGaokao_vedioartitle(String url) throws Exception{
        return "";
@@ -394,7 +425,10 @@ public class MyActivity extends AppCompatActivity
     int id = item.getItemId();
 
     if (id == R.id.action_settings) {
-      return true;
+        Intent intent=new Intent(context,DownloadFileService.class);
+        intent.putExtra("rootPath",MyTools.getRootPath(this));
+        context.startService(intent);
+        return true;
     }
 
     return super.onOptionsItemSelected(item);
@@ -406,7 +440,18 @@ public class MyActivity extends AppCompatActivity
 
   @Override
   public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
+      if(position==0){
+          myApp.setTypeid("001");
+      }
+      if(position==1){
+          myApp.setTypeid("002");
+      }
+      if(position==2){
+          myApp.setTypeid("003");
+      }
+      if(position==3){
+          myApp.setTypeid("004");
+      }
   }
 
   @Override public void onPageScrollStateChanged(int state) {
@@ -414,11 +459,14 @@ public class MyActivity extends AppCompatActivity
   }
 
   @Override public void onClick(View v) {
+      /*
     switch (v.getId()) {
       // FloatingActionButton的点击事件
       case R.id.id_floatingactionbutton:
         SnackbarUtil.show(v, getString(R.string.plusone), 0);
         break;
-    }
+    }*/
   }
+
+
 }

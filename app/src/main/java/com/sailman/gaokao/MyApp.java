@@ -4,8 +4,11 @@ package com.sailman.gaokao;
 
 
 import android.app.Application;
+import android.util.Log;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.TimeZone;
 
 
@@ -16,7 +19,21 @@ public class MyApp extends Application {
 	private String subjectID;
 	private String label_ThreadVar;
 	private String chapter_ThreadVar;
+	private String vedioartitle_ThreadVar;
+	private String typeid;
+	private String return_result;
+    private List<Gaokao_vedioartitleSendPhone> list=new ArrayList<Gaokao_vedioartitleSendPhone>();
 
+    public List<Gaokao_vedioartitleSendPhone> getList(){
+        return list;
+    }
+    public void addList(Gaokao_vedioartitleSendPhone gaokao_vedioartitleSendPhone){
+
+        list.add(gaokao_vedioartitleSendPhone);
+    }
+    public void removeList(int i){
+		list.remove(i);
+	}
 	public Integer getLabelclassificationID() {
 		return labelclassificationID;
 	}
@@ -55,5 +72,29 @@ public class MyApp extends Application {
 
 	public void setChapter_ThreadVar(String chapter_ThreadVar) {
 		this.chapter_ThreadVar = chapter_ThreadVar;
+	}
+
+	public String getVedioartitle_ThreadVar() {
+		return vedioartitle_ThreadVar;
+	}
+
+	public void setVedioartitle_ThreadVar(String vedioartitle_ThreadVar) {
+		this.vedioartitle_ThreadVar = vedioartitle_ThreadVar;
+	}
+
+	public String getTypeid() {
+		return typeid;
+	}
+
+	public void setTypeid(String typeid) {
+		this.typeid = typeid;
+	}
+
+	public String getReturn_result() {
+		return return_result;
+	}
+
+	public void setReturn_result(String return_result) {
+		this.return_result = return_result;
 	}
 }
