@@ -153,7 +153,7 @@ public class MyFragment extends Fragment
 
     if (flag != STAGGERED_GRID) {
       //应该在这传数据给MyRecyclerViewAdapter
-      mRecyclerViewAdapter = new MyRecyclerViewAdapter(getActivity());
+      mRecyclerViewAdapter = new MyRecyclerViewAdapter(getActivity(),MyTools.getRootPath(getActivity()));
       mRecyclerViewAdapter.setOnItemClickListener(this);
       mRecyclerView.setAdapter(mRecyclerViewAdapter);//和下拉刷新组件关联起来了
     }

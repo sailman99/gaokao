@@ -19,7 +19,9 @@
 
 package com.sailman.gaokao.adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
@@ -30,10 +32,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.sailman.gaokao.Gaokao_vedioartitleSendPhone;
+import com.sailman.gaokao.MyTools;
 import com.sailman.gaokao.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.sailman.gaokao.MyTools.getLoacalBitmap;
 
 /**
  * Created by Monkey on 2015/6/29.
@@ -53,12 +58,13 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewHo
   }
 
   public Context mContext;
+  public String  rootPath;
   public List<Gaokao_vedioartitleSendPhone> mDatas;
   public LayoutInflater mLayoutInflater;
 
 
-  public MyRecyclerViewAdapter(Context mContext) {
-
+  public MyRecyclerViewAdapter(Context mContext, String rootPath) {
+    this.rootPath=rootPath;
     this.mContext = mContext;
     mLayoutInflater = LayoutInflater.from(mContext);
     mDatas = new ArrayList<Gaokao_vedioartitleSendPhone>();
@@ -138,6 +144,14 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewHo
 
     holder.mReadcount.setText("阅读次数: "+gaokao_vedioartitleSendPhone.getReadcount());
     holder.mMaxlookdate.setText(gaokao_vedioartitleSendPhone.getMaxlookdate());
+
+    String[] imgname=gaokao_vedioartitleSendPhone.getUrl().split("/");
+    if(MyTools.imgfileIsExists(rootPath,imgname[imgname.length-1])){
+      Bitmap bitmap = MyTools.getLoacalBitmap(rootPath+"/gaokaoimg/"+imgname[imgname.length-1]+".png");
+
+      holder.mPicture.setImageBitmap(bitmap);
+    }
+
   }
 
   @Override public int getItemCount() {

@@ -21,6 +21,7 @@ package com.sailman.gaokao.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.support.v7.widget.CardView;
 
@@ -45,6 +46,7 @@ public class MyRecyclerViewHolder extends RecyclerView.ViewHolder {
     public TextView mStay;
     public TextView mReadcount;
     public TextView mMaxlookdate;
+    public ImageView mPicture;
 
   public MyRecyclerViewHolder(View itemView) {
       super(itemView);
@@ -62,5 +64,6 @@ public class MyRecyclerViewHolder extends RecyclerView.ViewHolder {
       mStay = (TextView)itemView.findViewById(R.id.id_stay);
       mReadcount = (TextView)itemView.findViewById(R.id.id_readcount);
       mMaxlookdate = (TextView)itemView.findViewById(R.id.id_maxlookdate);
+      mPicture = (ImageView)itemView.findViewById(R.id.id_picture);
   }
 }

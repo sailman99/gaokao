@@ -19,6 +19,7 @@
 
 package com.sailman.gaokao;
 
+import android.app.Activity;
 import android.app.DownloadManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -51,6 +52,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.sailman.gaokao.R;
 import com.sailman.gaokao.adapter.MyViewPagerAdapter;
@@ -93,6 +95,7 @@ public class MyActivity extends AppCompatActivity
     private EditText mid_keyword;
     private ThreadLocal<String> ts = new ThreadLocal<String>();
     private Context context;
+    private Activity activity;
     private MyApp myApp = new MyApp();
     // TabLayout中的tab标题
     private String[] mTitles;
@@ -109,7 +112,7 @@ public class MyActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my);
         context = this;
-
+        activity = this;
 
 
 
@@ -425,9 +428,12 @@ public class MyActivity extends AppCompatActivity
     int id = item.getItemId();
 
     if (id == R.id.action_settings) {
-        Intent intent=new Intent(context,DownloadFileService.class);
-        intent.putExtra("rootPath",MyTools.getRootPath(this));
-        context.startService(intent);
+        //Intent intent=new Intent(context,DownloadFileService.class);
+        //intent.putExtra("rootPath",MyTools.getRootPath(this));
+        //context.startService(intent);
+        Toast.makeText(getApplicationContext(),MyTools.getRootPathMsg(activity),Toast.LENGTH_LONG).show();
+
+
         return true;
     }
 

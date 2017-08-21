@@ -1,6 +1,8 @@
 package com.sailman.gaokao;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Environment;
 
 import org.json.JSONArray;
@@ -8,10 +10,14 @@ import org.json.JSONArray;
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -81,7 +87,17 @@ public final  class MyTools {
     public static String getRootPath(Activity activity){
         StorageList storageList=new StorageList(activity);
         String[] path=storageList.getVolumePaths();
+        Arrays.sort(path);
         return path[path.length-1];
+    }
+    public static String getRootPathMsg(Activity activity){
+        StorageList storageList=new StorageList(activity);
+        String[] path= storageList.getVolumePaths();
+        Arrays.sort(path);
+        String str="";
+        for(int i=0;i<path.length;i++)
+            str=str+"*"+path[i];
+        return str;
     }
     public static  boolean fileIsExists(String rootPath,String strFile)
     {
@@ -100,6 +116,34 @@ public final  class MyTools {
         }
 
         return true;
+    }
+    public static  boolean imgfileIsExists(String rootPath,String strFile)
+    {
+        try
+        {
+            File f=new File(rootPath+"/gaokaoimg/"+strFile+".png");
+            if(!f.exists())
+            {
+                return false;
+            }
+
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+
+        return true;
+    }
+    public static Bitmap getLoacalBitmap(String url) {
+        try {
+            FileInputStream fis = new FileInputStream(url);
+            return BitmapFactory.decodeStream(fis);  ///把流转化为Bitmap图片
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
     public static List<Gaokao_vedioartitleSendPhone> getGaokao_vedioartitle(String vedioartitle){
         List<Gaokao_vedioartitleSendPhone> list= new ArrayList();

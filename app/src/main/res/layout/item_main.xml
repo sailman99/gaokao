@@ -1,21 +1,3 @@
-<!--
-  ~ /*
-  ~  *
-  ~  *  *
-  ~  *  *  * ===================================
-  ~  *  *  * Copyright (c) 2016.
-  ~  *  *  * 作者：安卓猴
-  ~  *  *  * 微博：@安卓猴
-  ~  *  *  * 博客：http://sunjiajia.com
-  ~  *  *  * Github：https://github.com/opengit
-  ~  *  *  *
-  ~  *  *  * 注意**：如果您使用或者修改该代码，请务必保留此版权信息。
-  ~  *  *  * ===================================
-  ~  *  *
-  ~  *  *
-  ~  *
-  ~  */
-  -->
 
 <!--
     CardView就是一个卡片样式的FrameLayout。
@@ -68,6 +50,13 @@
       android:layout_marginLeft="10sp"
       android:layout_marginRight="10sp"
       android:layout_height="wrap_content">
+      <ImageView
+          android:id="@+id/id_picture"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:scaleType="fitXY"
+          android:adjustViewBounds="true"
+          android:contentDescription="@string/app_name"/>
       <TextView
           android:id="@+id/id_title"
           android:layout_width="match_parent"
@@ -132,38 +121,38 @@
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:textSize="12sp"/>
+            android:textSize="10sp"/>
 
         <TextView
             android:id="@+id/id_content"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:textSize="12sp"/>
+            android:textSize="10sp"/>
         <TextView
             android:id="@+id/id_learn"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:textSize="12sp"/>
+            android:textSize="10sp"/>
         <TextView
             android:id="@+id/id_stay"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:textSize="12sp"/>
+            android:textSize="10sp"/>
         <TextView
             android:id="@+id/id_readcount"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:textSize="12sp"/>
+            android:textSize="10sp"/>
         <TextView
             android:id="@+id/id_maxlookdate"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:textSize="12sp"/>
+            android:textSize="10sp"/>
     </LinearLayout>
   </LinearLayout>
 
