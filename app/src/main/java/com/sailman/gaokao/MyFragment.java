@@ -1,46 +1,21 @@
-/*
- *
- *  *
- *  *  *
- *  *  *  * ===================================
- *  *  *  * Copyright (c) 2016.
- *  *  *  * 作者：安卓猴
- *  *  *  * 微博：@安卓猴
- *  *  *  * 博客：http://sunjiajia.com
- *  *  *  * Github：https://github.com/opengit
- *  *  *  *
- *  *  *  * 注意**：如果您使用或者修改该代码，请务必保留此版权信息。
- *  *  *  * ===================================
- *  *  *
- *  *  *
- *  *
- *
- */
 
 package com.sailman.gaokao;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.sailman.gaokao.adapter.MyRecyclerViewAdapter;
-import com.sailman.gaokao.utils.SnackbarUtil;
 
 import org.json.JSONArray;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Created by Monkey on 2015/6/29.
@@ -65,8 +40,16 @@ public class MyFragment extends Fragment
   private static final int SPAN_COUNT = 2;
   private int flag = 0;
 
+  private String label_ThreadVar;
+  private String chapter_ThreadVar;
 
+  public void setLabel_ThreadVar(String label_threadVar){
+    this.label_ThreadVar=label_threadVar;
+  }
 
+  public void setChapter_ThreadVar(String chapter_threadVar){
+    this.chapter_ThreadVar=chapter_threadVar;
+  }
   public void addData(String vedioartitle){
       mRecyclerViewAdapter.mDatas.clear();
      // ArrayList<Gaokao_vedioartitleSendPhone> gaokao_vedioartitleSendPhoneList = new ArrayList<>();
@@ -212,6 +195,8 @@ public class MyFragment extends Fragment
     intent.putExtra("content",gaokao_vedioartitleSendPhone.getContent());
     intent.putExtra("learn",gaokao_vedioartitleSendPhone.getLearn());
     intent.putExtra("stay",gaokao_vedioartitleSendPhone.getStay());
+    intent.putExtra("label_ThreadVar",label_ThreadVar);
+    intent.putExtra("chapter_ThreadVar",chapter_ThreadVar);
     startActivity(intent);
   }
 

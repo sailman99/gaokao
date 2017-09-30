@@ -24,10 +24,11 @@ public class LocalVideoActivity extends AppCompatActivity {
 
         //本地的视频  需要在手机SD卡根目录添加一个 fl1234.mp4 视频
         Intent intent = getIntent();
-        String urilocation = intent.getStringExtra("uri");
-        String[] locationurl;
-        locationurl=urilocation.split("/");
-        Uri uri = Uri.parse(Environment.getExternalStorageDirectory().getPath()+"/gaokao/"+locationurl[locationurl.length-1]);
+       // String urilocation = intent.getStringExtra("uri");
+       // String[] locationurl;
+       // locationurl=urilocation.split("/");
+       // Uri uri = Uri.parse(Environment.getExternalStorageDirectory().getPath()+"/gaokao/"+locationurl[locationurl.length-1]);
+        Uri uri=Uri.parse(intent.getStringExtra("uri"));
         videoView = (VideoView)this.findViewById(R.id.locationvideoView);
 
         //设置视频控制器

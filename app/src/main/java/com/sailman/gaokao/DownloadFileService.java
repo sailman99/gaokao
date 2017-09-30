@@ -22,7 +22,7 @@ import java.util.List;
 
 public class DownloadFileService extends Service {
     private MyApp myApp;
-    private String rootPath;
+    private String[] rootPath;
     public DownloadFileService(){
         myApp=new MyApp();
     }
@@ -43,7 +43,8 @@ public class DownloadFileService extends Service {
             if (msg.what == 4) {
                 List<Gaokao_vedioartitleSendPhone> list=MyTools.getGaokao_vedioartitle(myApp.getVedioartitle_ThreadVar());
                 for(Gaokao_vedioartitleSendPhone gaokao_vedioartitleSendPhone:list){
-                    if(!MyTools.fileIsExists(rootPath,MyTools.getFileName(gaokao_vedioartitleSendPhone.getTitle()))){
+                    String fileName=MyTools.fileIsExists(rootPath,MyTools.getFileName(gaokao_vedioartitleSendPhone.getTitle()));
+                    if(fileName!=null){
                         myApp.addList(gaokao_vedioartitleSendPhone);
                     }
                 }
@@ -62,7 +63,7 @@ public class DownloadFileService extends Service {
     };
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        rootPath = intent.getStringExtra("rootPath");
+        //rootPath = intent.getStringExtra("rootPath");
 
 
         final String url="http://113.107.154.131:9001/gupiao/JsonActiongetGaokao_vedioartitle";

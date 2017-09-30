@@ -100,7 +100,9 @@ public class PlayActivity extends Activity {
     private boolean b_fileExists;
     private MyApp myApp;
     private Context context;
-    private String rootPath;
+    private String[] rootPath;
+    private String label_ThreadVar;
+    private String chapter_ThreadVar;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -121,6 +123,8 @@ public class PlayActivity extends Activity {
         content = intent.getStringExtra("content");
         learn = intent.getStringExtra("learn");
         stay = intent.getStringExtra("stay");
+        label_ThreadVar=intent.getStringExtra("label_ThreadVar");
+        chapter_ThreadVar=intent.getStringExtra("chapter_ThreadVar");
         look="1";
         myApp = new MyApp();
         context = this;
@@ -140,7 +144,8 @@ public class PlayActivity extends Activity {
                     str=str+"("+locationfile[i];
                 }
             }
-            if(MyTools.fileIsExists(rootPath,str)){
+
+            if(MyTools.fileIsExists(rootPath,str)!=null){
                 locationpath=str;
                 b_fileExists=true;
             }else{
@@ -149,7 +154,7 @@ public class PlayActivity extends Activity {
 
         }else{
             if(locationfile.length>1) {
-                if (MyTools.fileIsExists(rootPath,locationfile[locationfile.length - 2])) {
+                if (MyTools.fileIsExists(rootPath,locationfile[locationfile.length - 2])!=null) {
                     locationpath = locationfile[locationfile.length - 2];
                     b_fileExists = true;
                 } else {
@@ -297,7 +302,7 @@ public class PlayActivity extends Activity {
                 //  1.  先设定好Intent
                 Intent intent = new Intent(v.getContext(), LocalVideoActivity.class);
 
-                intent.putExtra("uri", Environment.getExternalStorageDirectory().getPath()+"/gaokao/"+locationpath+".mp4");
+                intent.putExtra("uri", MyTools.fileIsExists(rootPath,locationpath));
                 startActivity(intent);
 
             }
@@ -346,7 +351,8 @@ public class PlayActivity extends Activity {
         new Thread() {
             public void run() {
                 try {
-                    myApp.setLabel_ThreadVar(MyTools.readFromDBA(urla,post));
+                   // myApp.setLabel_ThreadVar(MyTools.readFromDBA(urla,post));
+                    myApp.setLabel_ThreadVar(label_ThreadVar);
                     Message msg = new Message();
                     msg.what = 0; //labelclassification
                     handler.sendMessage(msg);
@@ -355,7 +361,8 @@ public class PlayActivity extends Activity {
         new Thread() {
             public void run() {
                 try {
-                    myApp.setChapter_ThreadVar(MyTools.readFromDBA(urlb,post));
+                  //  myApp.setChapter_ThreadVar(MyTools.readFromDBA(urlb,post));
+                    myApp.setChapter_ThreadVar(chapter_ThreadVar);
                     Message msg = new Message();
                     msg.what = 1; //subjectchapter
                     handler.sendMessage(msg);

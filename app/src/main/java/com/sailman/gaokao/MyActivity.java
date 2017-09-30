@@ -96,6 +96,7 @@ public class MyActivity extends AppCompatActivity
     private ThreadLocal<String> ts = new ThreadLocal<String>();
     private Context context;
     private Activity activity;
+    private DbAdaptor dbAdaptor;
     private MyApp myApp = new MyApp();
     // TabLayout中的tab标题
     private String[] mTitles;
@@ -113,7 +114,7 @@ public class MyActivity extends AppCompatActivity
         setContentView(R.layout.activity_my);
         context = this;
         activity = this;
-
+        dbAdaptor=DbAdaptor.getInstance(getApplicationContext());
 
 
         // 初始化各种控件
@@ -349,22 +350,31 @@ public class MyActivity extends AppCompatActivity
             }
             if(msg.what==2){
                 MyFragment mFragment;
+
                 try {
                     if("001".equals(myApp.getTypeid())) {
                         mFragment = (MyFragment) mFragments.get(0);
                         mFragment.addData(myApp.getVedioartitle_ThreadVar());
+                        mFragment.setLabel_ThreadVar(myApp.getLabel_ThreadVar());
+                        mFragment.setChapter_ThreadVar(myApp.getChapter_ThreadVar());
                     }
                     if("002".equals(myApp.getTypeid())) {
                         mFragment = (MyFragment) mFragments.get(1);
                         mFragment.addData(myApp.getVedioartitle_ThreadVar());
+                        mFragment.setLabel_ThreadVar(myApp.getLabel_ThreadVar());
+                        mFragment.setChapter_ThreadVar(myApp.getChapter_ThreadVar());
                     }
                     if("003".equals(myApp.getTypeid())) {
                         mFragment = (MyFragment) mFragments.get(2);
                         mFragment.addData(myApp.getVedioartitle_ThreadVar());
+                        mFragment.setLabel_ThreadVar(myApp.getLabel_ThreadVar());
+                        mFragment.setChapter_ThreadVar(myApp.getChapter_ThreadVar());
                     }
                     if("004".equals(myApp.getTypeid())) {
                         mFragment = (MyFragment) mFragments.get(3);
                         mFragment.addData(myApp.getVedioartitle_ThreadVar());
+                        mFragment.setLabel_ThreadVar(myApp.getLabel_ThreadVar());
+                        mFragment.setChapter_ThreadVar(myApp.getChapter_ThreadVar());
                     }
 
                 }catch (Exception e){}
@@ -436,6 +446,22 @@ public class MyActivity extends AppCompatActivity
 
         return true;
     }
+      if (id == R.id.download_db) {
+          final String url="http://113.107.154.131:9001/gupiao/JsonActionDownloadGaokao_vedioartitle";
+          final String post="jsonString= where 1=1";
+          new Thread() {
+              public void run() {
+                  try {
+                      myApp.setDownloadVedioartitle_ThreadVar(MyTools.readFromDBA(url,post));
+                      Message msg = new Message();
+                      msg.what = 5; //subjectchapter
+                      handler.sendMessage(msg);
+                  }catch (Exception e){Log.v("TAG",e.getMessage());}
+              }}.start();
+
+
+          return true;
+      }
 
     return super.onOptionsItemSelected(item);
   }

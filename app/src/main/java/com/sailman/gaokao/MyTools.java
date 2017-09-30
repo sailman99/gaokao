@@ -84,11 +84,10 @@ public final  class MyTools {
         }
         return str;
     }
-    public static String getRootPath(Activity activity){
+    public static String[] getRootPath(Activity activity){
         StorageList storageList=new StorageList(activity);
         String[] path=storageList.getVolumePaths();
-        Arrays.sort(path);
-        return path[path.length-1];
+        return path;
     }
     public static String getRootPathMsg(Activity activity){
         StorageList storageList=new StorageList(activity);
@@ -99,41 +98,46 @@ public final  class MyTools {
             str=str+"*"+path[i];
         return str;
     }
-    public static  boolean fileIsExists(String rootPath,String strFile)
+    public static  String fileIsExists(String[] rootPath,String strFile)
     {
         try
         {
-            File f=new File(rootPath+"/gaokao/"+strFile+".mp4");
-            if(!f.exists())
-            {
-                return false;
+
+            for(int i=0;i<rootPath.length;i++){
+                File f=new File(rootPath[i]+"/gaokao/"+strFile+".mp4");
+                if(f.exists()){
+                    return rootPath[i]+"/gaokao/"+strFile+".mp4";
+                }
             }
 
         }
         catch (Exception e)
         {
-            return false;
+            return null;
         }
 
-        return true;
+        return null;
     }
-    public static  boolean imgfileIsExists(String rootPath,String strFile)
+    public static  Bitmap imgfileIsExists(String[] rootPath,String strFile)
     {
         try
         {
-            File f=new File(rootPath+"/gaokaoimg/"+strFile+".png");
-            if(!f.exists())
-            {
-                return false;
+
+            for(int i=0;i<rootPath.length;i++){
+                File f=new File(rootPath[i]+"/gaokaoimg/"+strFile+".png");
+                if(f.exists()){
+                    FileInputStream fis = new FileInputStream(rootPath[i]+"/gaokaoimg/"+strFile+".png");
+                    return BitmapFactory.decodeStream(fis);  ///把流转化为Bitmap图片
+                }
             }
 
         }
         catch (Exception e)
         {
-            return false;
+            return null;
         }
 
-        return true;
+        return null;
     }
     public static Bitmap getLoacalBitmap(String url) {
         try {

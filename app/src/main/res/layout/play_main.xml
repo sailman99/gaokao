@@ -11,9 +11,9 @@
     <EditText
         android:id="@+id/editText_label"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_marginTop="8dp"
-        android:ems="8"
+        android:layout_height="60dp"
+        android:layout_marginTop="4dp"
+        android:ems="6"
         android:inputType="textMultiLine"
         android:enabled="false"
         android:textColor="#000000"
@@ -23,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="35dp"
         android:layout_gravity="top"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="3dp"
         android:orientation="horizontal"
         >
         <android.support.v7.widget.AppCompatSpinner
@@ -43,8 +43,8 @@
     <EditText
         android:id="@+id/editText_keyword"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:ems="10"
+        android:layout_height="60dp"
+        android:ems="6"
         android:inputType="textMultiLine"
         android:textColor="#000000"
         android:hint="@string/keyword"
@@ -53,8 +53,8 @@
     <EditText
         android:id="@+id/editText_comments"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:ems="10"
+        android:layout_height="60dp"
+        android:ems="6"
         android:hint="@string/comments"
         android:textColor="#000000"
         android:inputType="textMultiLine" />
@@ -89,7 +89,7 @@
         android:id="@+id/radiogroup_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="6dp"
         android:orientation="horizontal">
         <RadioButton
             android:id="@+id/radioButton_contenta"
@@ -116,21 +116,21 @@
         android:id="@+id/radiogroup_learn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="6dp"
         android:orientation="horizontal">
         <RadioButton
             android:id="@+id/radioButton_learna"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="很有借鉴作用" />
+            android:text="很有借鉴" />
 
         <RadioButton
             android:id="@+id/radioButton_learnb"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="我已掌握" />
+            android:text="已掌握" />
         <RadioButton
             android:id="@+id/radioButton_learnc"
             android:layout_width="0dip"
@@ -143,21 +143,21 @@
         android:id="@+id/radiogroup_stay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="6dp"
         android:orientation="horizontal">
         <RadioButton
             android:id="@+id/radioButton_staya"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="值得反复看" />
+            android:text="值反复看" />
 
         <RadioButton
             android:id="@+id/radioButton_stayb"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="留下复习时看" />
+            android:text="复习时看" />
         <RadioButton
             android:id="@+id/radioButton_stayc"
             android:layout_width="0dip"
@@ -170,7 +170,7 @@
         android:id="@+id/radiogroup_look"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="6dp"
         android:orientation="horizontal">
         <RadioButton
             android:id="@+id/radioButton_looka"
@@ -191,7 +191,7 @@
     <android.support.v7.widget.ButtonBarLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="15dp"
         >
         <android.support.v7.widget.AppCompatButton
             android:layout_width="0dip"
@@ -219,7 +219,7 @@
         android:id="@+id/saveandclose_PlayActivity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:textColor="#000000"
         android:text="保存并关闭" />
 </LinearLayout>

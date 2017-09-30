@@ -20,6 +20,7 @@ public class MyApp extends Application {
 	private String label_ThreadVar;
 	private String chapter_ThreadVar;
 	private String vedioartitle_ThreadVar;
+	private String downloadVedioartitle_ThreadVar;
 	private String typeid;
 	private String return_result;
     private List<Gaokao_vedioartitleSendPhone> list=new ArrayList<Gaokao_vedioartitleSendPhone>();
@@ -96,5 +97,13 @@ public class MyApp extends Application {
 
 	public void setReturn_result(String return_result) {
 		this.return_result = return_result;
+	}
+
+	public String getDownloadVedioartitle_ThreadVar() {
+		return downloadVedioartitle_ThreadVar;
+	}
+
+	public void setDownloadVedioartitle_ThreadVar(String downloadVedioartitle_ThreadVar) {
+		this.downloadVedioartitle_ThreadVar = downloadVedioartitle_ThreadVar;
 	}
 }

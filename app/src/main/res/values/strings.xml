@@ -21,7 +21,8 @@
   <string name="app_name">高考加油</string>
 
   <string name="toolbar_title">高考加油</string>
-  <string name="action_settings">下载视频文件到本地</string>
+  <string name="action_settings">测试存储卡</string>
+  <string name="download_db">更新数据库到本地</string>
   <string name="open">打开</string>
   <string name="close">关闭</string>
   <string name="header_author_name">高考加油</string>

@@ -23,8 +23,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -58,12 +60,12 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewHo
   }
 
   public Context mContext;
-  public String  rootPath;
+  public String[]  rootPath;
   public List<Gaokao_vedioartitleSendPhone> mDatas;
   public LayoutInflater mLayoutInflater;
 
 
-  public MyRecyclerViewAdapter(Context mContext, String rootPath) {
+  public MyRecyclerViewAdapter(Context mContext, String[] rootPath) {
     this.rootPath=rootPath;
     this.mContext = mContext;
     mLayoutInflater = LayoutInflater.from(mContext);
@@ -115,26 +117,28 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewHo
     }else{
         holder.mCard.setBackgroundColor(Color.parseColor("#f5e7f4"));
     }
+    holder.mVedio.setText("");
     if("0".equals(gaokao_vedioartitleSendPhone.getVedio()))
         holder.mVedio.setText("视频清晰");
     if("1".equals(gaokao_vedioartitleSendPhone.getVedio()))
       holder.mVedio.setText("视频一般");
     if("2".equals(gaokao_vedioartitleSendPhone.getVedio()))
       holder.mVedio.setText("视频模糊");
-
+    holder.mContent.setText("");
     if("0".equals(gaokao_vedioartitleSendPhone.getContent()))
       holder.mContent.setText("内容很好");
     if("1".equals(gaokao_vedioartitleSendPhone.getContent()))
       holder.mContent.setText("内容一般");
     if("2".equals(gaokao_vedioartitleSendPhone.getContent()))
       holder.mContent.setText("没有价值");
-
+    holder.mLearn.setText("");
     if("0".equals(gaokao_vedioartitleSendPhone.getLearn()))
       holder.mLearn.setText("很有借鉴");
     if("1".equals(gaokao_vedioartitleSendPhone.getLearn()))
       holder.mLearn.setText("我已掌握");
     if("2".equals(gaokao_vedioartitleSendPhone.getLearn()))
       holder.mLearn.setText("全是废话");
+    holder.mStay.setText("");
     if("0".equals(gaokao_vedioartitleSendPhone.getStay()))
       holder.mStay.setText("要反复看");
     if("1".equals(gaokao_vedioartitleSendPhone.getStay()))
@@ -146,11 +150,14 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewHo
     holder.mMaxlookdate.setText(gaokao_vedioartitleSendPhone.getMaxlookdate());
 
     String[] imgname=gaokao_vedioartitleSendPhone.getUrl().split("/");
-    if(MyTools.imgfileIsExists(rootPath,imgname[imgname.length-1])){
-      Bitmap bitmap = MyTools.getLoacalBitmap(rootPath+"/gaokaoimg/"+imgname[imgname.length-1]+".png");
-
+    Bitmap bitmap = MyTools.imgfileIsExists(rootPath,imgname[imgname.length-1]);
+    if(bitmap!=null){
       holder.mPicture.setImageBitmap(bitmap);
+
+    }else{
+        holder.mPicture.setImageResource(R.drawable.ic_user_backgroup_black);
     }
+
 
   }
 
