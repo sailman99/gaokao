@@ -22,6 +22,7 @@ package com.sailman.gaokao;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -144,9 +145,8 @@ public class PlayActivity extends Activity {
                     str=str+"("+locationfile[i];
                 }
             }
-
-            if(MyTools.fileIsExists(rootPath,str)!=null){
-                locationpath=str;
+            locationpath = MyTools.fileIsExists(rootPath,str);
+            if(locationpath!=null){
                 b_fileExists=true;
             }else{
                 b_fileExists=false;
@@ -154,8 +154,9 @@ public class PlayActivity extends Activity {
 
         }else{
             if(locationfile.length>1) {
-                if (MyTools.fileIsExists(rootPath,locationfile[locationfile.length - 2])!=null) {
-                    locationpath = locationfile[locationfile.length - 2];
+                locationpath=MyTools.fileIsExists(rootPath,locationfile[locationfile.length - 2]);
+                if (locationpath!=null) {
+                    //locationpath = locationfile[locationfile.length - 2];
                     b_fileExists = true;
                 } else {
                     b_fileExists = false;
@@ -302,12 +303,17 @@ public class PlayActivity extends Activity {
                 //  1.  先设定好Intent
                 Intent intent = new Intent(v.getContext(), LocalVideoActivity.class);
 
-                intent.putExtra("uri", MyTools.fileIsExists(rootPath,locationpath));
+                intent.putExtra("uri", locationpath);
                 startActivity(intent);
 
             }
         });
         bitem_clicked_location.setClickable(b_fileExists);
+        if(b_fileExists) {
+            bitem_clicked_location.setTextColor(Color.parseColor("#000000"));
+        }else{
+            bitem_clicked_location.setTextColor(Color.parseColor("#FFDA4848"));
+        }
         try {
             initSpinner(subjectid);
         }catch (Exception e){}

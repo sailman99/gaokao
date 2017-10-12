@@ -269,6 +269,14 @@ public class MyActivity extends AppCompatActivity
                         mCollapsingToolbarLayout.setTitle("其他");
                         myApp.setSubjectID("007");
                         break;
+                    case R.id.nav_menu_food:
+                        mCollapsingToolbarLayout.setTitle("美食");
+                        myApp.setSubjectID("008");
+                        break;
+                    case R.id.nav_menu_sport:
+                        mCollapsingToolbarLayout.setTitle("健身");
+                        myApp.setSubjectID("009");
+                        break;
                 }
                 try {
                     initSpinner(myApp.getSubjectID());
